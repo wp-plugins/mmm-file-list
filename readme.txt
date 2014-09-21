@@ -12,14 +12,13 @@ Plugin to list files in a given directory using a basic shortcode.
 
 == Description ==
 
-This is a simple plugin to list files in a given directory using this shortcode: [MMFileList  /].
+This is a simple plugin to list files in a given directory using this shortcode: [MMFileList  /]
 
 Parameters:
-
-* **folder**: Relative to the base directory of your wordpress install directory.
-* **format**: Unordered list (format="li") or comma-delimited (format="comma")
-* **types**: Only list given file types (e.g. types="pdf,doc,txt")
-* **class**: Only used for the "li" format, applies a given class to the unordered list (e.g. class="mmm-list")
+* folder: Relative to the base directory of your wordpress uploads directory (e.g. siteurl.com/media/ or siteurl.com/wp-content/uploads/).
+* format: Unordered list (format="li") or comma-delimited (format="comma")
+* types: Only list given file types (e.g. types="pdf,doc,txt")
+* class: Only used for the "li" format, applies a given class to the unordered list (e.g. class="mmm-list")
 
 == Installation ==
 
@@ -42,6 +41,9 @@ Not at this time.  If you want to request them via the forums here then I can ha
 1. Sample of the "li" output used with a fairly large set of bylaws.
 
 == Changelog ==
+
+= 0.1a =
+* Fixed a bug related to folders within the given path
 
 = 0.1 =
 * Initial release to WordPress.org

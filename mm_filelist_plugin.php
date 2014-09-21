@@ -3,7 +3,7 @@
 Plugin Name: Mmm Simple File List
 Plugin URI: http://www.mediamanifesto.com
 Description: Plugin to list files in a given directory using this shortcode [MMFileList folder="optional starting from basedir" format="li (html) or comma (txt)"" types="optional file-extension e.g. pdf,doc" class="optional css class for html list"]
-Version: 0.1
+Version: 0.1a
 Author: Adam Bissonnette
 Author URI: http://www.mediamanifesto.com
 */
@@ -24,7 +24,7 @@ class MM_FileList
         'class' => ''
 		), $atts ) );
 		
-		$baseDir = wp_upload_dir();
+		$baseDir = wp_upload_dir(); //Base Upload Directory
 		$dir = $baseDir['path'] . $folder;
 		$outputDir = $baseDir['url'] . $folder;
 		
@@ -35,15 +35,19 @@ class MM_FileList
 		foreach($files as $file)
 		{
 			$path_parts = pathinfo($file);
-			$extension = $path_parts['extension'];
-			
-			if($file != '.' && $file != '..' && in_array($extension, $typesToList))
-			{		 
-				if(!is_dir($dir.'/'.$file))
-				{
-					$list[$file] = $outputDir . '/' . $file;
-				} 
-			}
+
+            if (isset($path_parts['extension'])) //check for folders - don't list them
+            {
+    			$extension = $path_parts['extension'];
+    			
+    			if($file != '.' && $file != '..' && in_array($extension, $typesToList))
+    			{		 
+    				if(!is_dir($dir.'/'.$file))
+    				{
+    					$list[$file] = $outputDir . '/' . $file;
+    				} 
+    			}
+            }
 		}
         
         $output = "";
