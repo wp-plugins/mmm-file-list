@@ -16,7 +16,7 @@ This is a simple plugin to list files in a given directory using this shortcode:
 
 Parameters:
 
-* **folder**: Relative to the base uploads directory of your wordpress install directory.
+* **folder**: Relative to the base uploads directory of your wordpress install (e.g. siteurl.com/wp-content/uploads/ or siteurl.com/media).
 * **format**: Unordered list (format="li") or comma-delimited (format="comma")
 * **types**: Only list given file types (e.g. types="pdf,doc,txt")
 * **class**: Only used for the "li" format, applies a given class to the unordered list (e.g. class="mmm-list")
