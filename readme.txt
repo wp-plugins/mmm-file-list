@@ -37,6 +37,10 @@ Say you have a folder on your webserver with 30 files you want to list but you d
 
 Not at this time.  If you want to request them via the forums here then I can have them added fairly quickly.
 
+= Why not have a settings page or upload functionality? =
+
+The idea behind this plugin is to be really simple and not mess with your site.  The plugin file itself is designed so that you could just copy / paste it into your functions.php and it would run without even needing to worry about a plugin.  If you are looking for a full featured file manager you should take a look at [File Away](https://wordpress.org/support/view/plugin-reviews/file-away).
+
 == Screenshots ==
 
 1. Sample of the "li" output used with a fairly large set of bylaws.
