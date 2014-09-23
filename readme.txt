@@ -23,7 +23,7 @@ This is a simple plugin to list files in a given directory using this shortcode:
 
 **Output:**
 
-For all html (li) formats you can expect to see the following output wrapped in styleable containers:
+For all html (li,table) formats you can expect to see the following output wrapped in styleable containers:
 
 * Filename (linked to the File Url)
 * File Size
