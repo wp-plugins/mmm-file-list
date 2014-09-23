@@ -14,12 +14,31 @@ Plugin to list files in a given directory using a basic shortcode.
 
 This is a simple plugin to list files in a given directory using this shortcode: [MMFileList  /].
 
-Parameters:
+**Parameters:**
 
 * **folder**: Relative to the base uploads directory of your wordpress install (e.g. siteurl.com/wp-content/uploads/ or siteurl.com/media).
-* **format**: Unordered list (format="li") or comma-delimited (format="comma")
+* **format**: Tabular (format="table") or Unordered list (format="li") or comma-delimited (format="comma")
 * **types**: Only list given file types (e.g. types="pdf,doc,txt")
 * **class**: Only used for the "li" format, applies a given class to the unordered list (e.g. class="mmm-list")
+
+**Output:**
+
+For all html (li) formats you can expect to see the following output wrapped in styleable containers:
+
+* Filename (linked to the File Url)
+* File Size
+
+At this point "comma" is the only available text output and it only outputs the url.
+
+
+**Usage Examples:**
+
+Let's say you're using the default WordPress Media settings so we can expect your uploads folder to be in /wp-content/uploads with this in mind the shortcode "folder" attribute will look in a directory relative to this.  So if we used the following:
+
+[MMFileList folder="/cats/" format="table" types="png" /]
+
+This will result in a tabular list of all .png files in the /wp-content/uploads/cats/ folder.  It's important to ensure that you add the first "/" in that folder attribute to ensure you don't end up with the system looks for a directory like /wp-content/uploadscats/.
+
 
 == Installation ==
 
@@ -47,7 +66,13 @@ The idea behind this plugin is to be really simple and not mess with your site. 
 
 == Changelog ==
 
-= 0.1a =
+= 0.3 =
+* Added "table" output format
+* Added "filesize" to information that is output (this should automatically format to the nearest reasonable size B,K,M,G etc..)
+* Adjusted how the file array is built so it's more extensible
+* General Code Cleanup (naming changes, readibility prioritized over condensed & dehydrated code)
+
+= 0.2 =
 * Fixed a bug related to folders within the given path
 * Updated support docs and plugin description to show that folder is the base uploads directory and not the base directory.
 
@@ -56,5 +81,8 @@ The idea behind this plugin is to be really simple and not mess with your site. 
 
 == Upgrade Notice ==
 
-= 0.1a =
+= 0.3 =
+Adds functionality and some code cleanup.
+
+= 0.2 =
 If you're having trouble with folders in your chosen directory then you should upgrade to fix that bug.
