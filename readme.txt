@@ -16,13 +16,10 @@ This is a simple plugin to list files in a given directory using this shortcode:
 
 **Parameters:**
 
-* **folder**: Relative to the base uploads directory of your wordpress install (e.g. siteurl.com/wp-content/uploads/ or siteurl.com/media).
-
-**IMPORTANT NOTE:** You can check your media settings from your WordPress dashboard in Settings -> Media.  If you use the setting to organize your uploads into month- and year-based folders then your base directory will look like this: siteurl.com/wp-content/uploads/09/26/ and you should make sure to take that into account when trying to link to your folder based on that - it is highly recommended that you put your files in a more stable path since your base uploads directory (/mm/dd/) will change each day.
-
+* **folder**: Relative to the base uploads directory of your wordpress install (e.g. siteurl.com/wp-content/uploads/mm/yy/ or siteurl.com/wp-content/ or siteurl.com/media).  You can check your media settings from your WordPress dashboard in Settings -> Media.  If you organize your uploads into a month / year base folder you should either prepend the field with /../../ or disable that setting.
 * **format**: Tabular (format="table") or Unordered list (format="li") or comma-delimited (format="comma")
 * **types**: Only list given file types (e.g. types="pdf,doc,txt")
-* **class**: Only used for the "li" format, applies a given class to the unordered list (e.g. class="mmm-list")
+* **class**: Only used for the "li" and "table" formats, applies a given class to the unordered list (e.g. class="mmm-list")
 
 **Output:**
 
