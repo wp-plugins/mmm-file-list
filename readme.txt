@@ -19,7 +19,7 @@ This is a simple plugin to list files in a given directory using this shortcode:
 * **folder**: Relative to the base uploads directory of your wordpress install (e.g. siteurl.com/wp-content/uploads/mm/yy/ or siteurl.com/wp-content/ or siteurl.com/media).  You can check your media settings from your WordPress dashboard in Settings -> Media.  If you organize your uploads into a month / year base folder you should either prepend the field with "/../../" or disable that setting.
 * **format**: Tabular (format="table") or Unordered list (format="li") or comma-delimited (format="comma")
 * **types**: Only list given file types (e.g. types="pdf,doc,txt")
-* **class**: Only used for the "li" and "table" formats, applies a given class to the unordered list (e.g. class="mmm-list")
+* **class**: Only used for the "li" and "table" formats, applies a given class to the unordered list (e.g. class="mmm-list" / for more information on styling check out the FAQ)
 
 **Output:**
 
@@ -30,16 +30,15 @@ For all html formats you can expect to see the following output wrapped in style
 
 At this point "comma" is the only available text output and it only outputs the url to the file in a comma delimited list (no links - just text).
 
+If the folder you've entered isn't found or there are no files with the extensions you've listed there will be some warning text output to let you know.  This text is wrapped in a "mmm-warning" class in case you want to style it out (for more information on styling check out the FAQ)
 
 **Usage Examples:**
 
-Let's say you're using the default WordPress Media settings so we can expect your uploads folder to be in /wp-content/uploads/mm/yy/ with this in mind the shortcode "folder" attribute will look in a directory relative to this.
-
-Let's say we want to list "png" files in the folder "/wp-content/uploads/cats/" we would use the following shortcode:
+Let's say you're using the default WordPress Media settings so we can expect your uploads folder to be in /wp-content/uploads/mm/yy/ with this in mind the shortcode "folder" attribute will look in a directory relative to this.  With this base directory say we want to list "png" files in the folder "/wp-content/uploads/cats/" we would use the following shortcode:
 
 [MMFileList folder="/../../cats/" format="table" types="png" /]
 
-If you have you disabled the setting to store uploads in the /mm/yy/ folder structure and wanted to display that same file you would use this shortcode:
+If you have you disabled the setting to store uploads in the /mm/yy/ folder structure (you can do this within Settings -> Media) and wanted to display that same file you would use this shortcode:
 
 [MMFileList folder="/cats/" format="table" types="png" /]
 
@@ -65,6 +64,16 @@ Not at this time.  If you want to request them via the forums here then I can ha
 = Why not have a settings page or upload functionality? =
 
 The idea behind this plugin is to be really simple and not mess with your site.  The plugin file itself is designed so that you could just copy / paste it into your functions.php and it would run without even needing to worry about a plugin.  If you are looking for a full featured file manager you should take a look at [File Away](https://wordpress.org/support/view/plugin-reviews/file-away).
+
+= How can I style the list with the class I've added? =
+
+If you have admin access to your site or your theme allows you to add custom styles you can add CSS for the classes you've added into there.
+
+Example:
+
+If you want to remove the warning text that is output when folders / files are not found you can add the style:
+
+.mmm-warning {display: none;}
 
 == Screenshots ==
 
