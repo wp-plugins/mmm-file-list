@@ -23,7 +23,7 @@ This is a simple plugin to list files in a given directory using this shortcode:
 
 **Output:**
 
-For all html (li,table) formats you can expect to see the following output wrapped in styleable containers:
+For all html (li) formats you can expect to see the following output wrapped in styleable containers:
 
 * Filename (linked to the File Url)
 * File Size
@@ -66,6 +66,10 @@ The idea behind this plugin is to be really simple and not mess with your site. 
 
 == Changelog ==
 
+= 0.4 =
+* Added some output to show if the folder was not found or if there were no files of the given extension(s) found in the directory
+* Note: These new messages are wrapped in divs with a "mmm-warning" class so they can be styled to be hidden.
+
 = 0.3 =
 * Added "table" output format
 * Added "filesize" to information that is output (this should automatically format to the nearest reasonable size B,K,M,G etc..)
@@ -80,6 +84,9 @@ The idea behind this plugin is to be really simple and not mess with your site. 
 * Initial release to WordPress.org
 
 == Upgrade Notice ==
+
+= 0.4 =
+Debug text added in case you're not seeing files when you expect them to appear.
 
 = 0.3 =
 Adds functionality and some code cleanup.
