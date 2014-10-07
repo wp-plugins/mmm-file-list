@@ -84,8 +84,8 @@ If you want to remove the warning text that is output when folders / files are n
 == Changelog ==
 
 = 0.5 =
-= Added limit and orderby params to the shortcode
-= Changed the code to check if the directory exists before trying to get the files (this fixes the issue with warning messages from being displayed while having debug mode enabled)
+* Added limit and orderby params to the shortcode
+* Changed the code to check if the directory exists before trying to get the files (this fixes the issue with warning messages from being displayed while having debug mode enabled)
 
 = 0.4 =
 * Added some output to show if the folder was not found or if there were no files of the given extension(s) found in the directory
