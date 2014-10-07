@@ -20,6 +20,8 @@ This is a simple plugin to list files in a given directory using this shortcode:
 * **format**: Tabular (format="table") or Unordered list (format="li") or comma-delimited (format="comma")
 * **types**: Only list given file types (e.g. types="pdf,doc,txt")
 * **class**: Only used for the "li" and "table" formats, applies a given class to the unordered list (e.g. class="mmm-list" / for more information on styling check out the FAQ)
+* **limit**: The default value will list all files in the directory.  You can add a positive number of your choice and that amount of files will be displayed.
+* **orderby**: Current params can be either "name" (default) or "date" which sorts the files by date modified since date created seems to be hit and miss.
 
 **Output:**
 
@@ -81,6 +83,10 @@ If you want to remove the warning text that is output when folders / files are n
 
 == Changelog ==
 
+= 0.5 =
+= Added limit and orderby params to the shortcode
+= Changed the code to check if the directory exists before trying to get the files (this fixes the issue with warning messages from being displayed while having debug mode enabled)
+
 = 0.4 =
 * Added some output to show if the folder was not found or if there were no files of the given extension(s) found in the directory
 * Note: These new messages are wrapped in divs with a "mmm-warning" class so they can be styled to be hidden.
@@ -99,6 +105,9 @@ If you want to remove the warning text that is output when folders / files are n
 * Initial release to WordPress.org
 
 == Upgrade Notice ==
+
+= 0.5 =
+New shortcode params and some code fixes for users running in debug mode.
 
 = 0.4 =
 Debug text added in case you're not seeing files when you expect them to appear.
