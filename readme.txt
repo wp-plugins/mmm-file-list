@@ -3,8 +3,8 @@ Contributors: MManifesto
 Donate link: http://www.mediamanifesto.com/donate/
 Tags: File List, Shortcode
 Requires at least: 3.4
-Tested up to: 4.0
-Stable tag: 4.0
+Tested up to: 4.1
+Stable tag: 4.1
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -22,6 +22,7 @@ This is a simple plugin to list files in a given directory using this shortcode:
 * **class**: Only used for the "li" and "table" formats, applies a given class to the unordered list (e.g. class="mmm-list" / for more information on styling check out the FAQ)
 * **limit**: The default value will list all files in the directory.  You can add a positive number of your choice and that amount of files will be displayed.
 * **orderby**: Current params can be either "name" (default) or "date" which sorts the files by date modified since date created seems to be hit and miss.
+* **target**: This parameter lets you set a "target" for the links to the listed files (This is typically used to open the files in a new window)
 
 **Output:**
 
@@ -82,6 +83,11 @@ If you want to remove the warning text that is output when folders / files are n
 1. Sample of the "li" output used with a fairly large set of bylaws.
 
 == Changelog ==
+
+= 0.6 =
+
+* Reworked how the class parameter is passed through the code so more information can be sent along with it
+* Added the option to include target for the links using the aforementioned method
 
 = 0.5 =
 * Added limit and orderby params to the shortcode
