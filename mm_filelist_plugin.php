@@ -3,7 +3,7 @@
 Plugin Name: Mmm Simple File List
 Plugin URI: http://www.mediamanifesto.com
 Description: Plugin to list files in a given directory using this shortcode [MMFileList folder="optional starting from base uploads path" format="li (html) or comma (txt)"" types="optional file-extension e.g. pdf,doc" class="optional css class for html list"]
-Version: 0.6
+Version: 0.6a
 Author: Adam Bissonnette
 Author URI: http://www.mediamanifesto.com
 */
@@ -27,9 +27,11 @@ class MM_FileList
         'target' => ''
 		), $atts ) );
 		
+        $folder = $this->_check_for_slashes($folder);
+
 		$baseDir = wp_upload_dir(); //Base Upload Directory
-		$dir = $baseDir['path'] . $folder;
-		$outputDir = $baseDir['url'] . $folder;
+		$dir = $baseDir['path'] . '/' . $folder;
+		$outputDir = $baseDir['url'] . '/' . $folder; //ex. http://example.com/wp-content/uploads/2010/05/../../cats
 		
 		$typesToList = explode(",", $types);
 
@@ -39,7 +41,7 @@ class MM_FileList
 
         if (!$files)
         {
-            $output .= sprintf('<div class="mmm-warning">The folder "%s" was not found at: "%s".', $folder, $outputDir);
+            $output .= sprintf('<div class="mmm-warning">The folder "%s" was not found at: "%s".', $dir, $outputDir);
         }
         else
         {
@@ -166,6 +168,19 @@ class MM_FileList
          }
          if (!ksort($arr)) return false;
          return $arr;
+    }
+
+    //Remove slashes from the start and end of the path if they exist
+    function _check_for_slashes($folder)
+    {
+        $fixedPath = rtrim ($folder, '/');
+        $fixedPath = ltrim ($fixedPath, '/');
+        return $fixedPath;
+    }
+
+    function _flip_slahes($folder)
+    {
+        return str_replace("/", "\\", $folder);
     }
 
 } // end class

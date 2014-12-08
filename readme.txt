@@ -45,7 +45,7 @@ If you have you disabled the setting to store uploads in the /mm/yy/ folder stru
 
 [MMFileList folder="/cats/" format="table" types="png" /]
 
-This will result in a tabular list of all .png files in the /wp-content/uploads/cats/ folder.  It's important to ensure that you add the first "/" in that folder attribute to ensure you don't end up with the system looks for a directory like /wp-content/uploadscats/.
+This will result in a tabular list of all .png files in the /wp-content/uploads/cats/ folder.
 
 
 == Installation ==
@@ -83,6 +83,10 @@ If you want to remove the warning text that is output when folders / files are n
 1. Sample of the "li" output used with a fairly large set of bylaws.
 
 == Changelog ==
+
+= 0.6a =
+
+* Added slightly more robust path code so trailing / preceeding slashes aren't so tricky to work with.  e.g. say you want to load files from a folder called "cats".  You can now simply have folder="cats" instead of having to include the first slash "/cats" and having to avoid using the trailing slash "/cats/".  Any variation should work along with handling of cases when too many slashes are added "//cats//".
 
 = 0.6 =
 
