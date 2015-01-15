@@ -2,8 +2,8 @@
 /*
 Plugin Name: Mmm Simple File List
 Plugin URI: http://www.mediamanifesto.com
-Description: Plugin to list files in a given directory using this shortcode [MMFileList folder="optional starting from base uploads path" format="li (html) or comma (txt)"" types="optional file-extension e.g. pdf,doc" class="optional css class for html list"]
-Version: 0.6a
+Description: Plugin to list files in a given directory using this shortcode [MMFileList folder="optional starting from base uploads path" format="li (unordered list) or table (tabular) or img (unordered list of images) or comma (plain text, comma, delimited) types="optional file-extension e.g. pdf,doc" class="optional css class for html list"]
+Version: 0.7
 Author: Adam Bissonnette
 Author URI: http://www.mediamanifesto.com
 */
@@ -33,7 +33,7 @@ class MM_FileList
 		$dir = $baseDir['path'] . '/' . $folder;
 		$outputDir = $baseDir['url'] . '/' . $folder; //ex. http://example.com/wp-content/uploads/2010/05/../../cats
 		
-		$typesToList = explode(",", $types);
+		$typesToList = array_filter(explode(",", $types));
 
         $output = "";
 
@@ -61,12 +61,25 @@ class MM_FileList
                 {
         			$extension = $path_parts['extension'];
         			
-        			if($file != '.' && $file != '..' && in_array($extension, $typesToList))
-        			{		 
-        				if(!is_dir($dir.'/'.$file))
-        				{
-        					array_push($list, array("name" => $file, "url" => $outputDir . "/" . $file, "size" => $this->human_filesize(filesize($dir . '/' . $file))));
-        				}
+        			if($file != '.' && $file != '..')
+        			{
+                        if(!is_dir($dir.'/'.$file))
+                        {
+                            $file = array("name" => $file, "url" => $outputDir . "/" . $file, "size" => $this->human_filesize(filesize($dir . '/' . $file)));
+                            
+                            //If we are looking for specific types then only list those types, otherwise list everything
+                            if (count($typesToList) > 0)
+                            {
+                                if (in_array($extension, $typesToList))
+                                {
+                                    array_push($list, $file);
+                                }
+                            }
+                            else
+                            {
+                                array_push($list, $file);
+                            }
+                        }
         			}
                 }
     		}
@@ -99,6 +112,9 @@ class MM_FileList
                 	case 'comma':
                 	    $output = $this->_MakeCommaDelimitedList($list);
          			break;
+                    case 'img':
+                        $output = $this->_MakeUnorderedListOfImages($list, $formatAtts);
+                    break;
                     case 'li':
                     default:
                         return $this->_MakeUnorderedList($list, $formatAtts);
@@ -132,6 +148,22 @@ class MM_FileList
 		
 		return sprintf($listTemplate, $atts["class"], $items);
 	}
+
+    function _MakeUnorderedListOfImages($list, $atts)
+    {
+        //These templates could be set as editable / saveable options
+        $listTemplate = '<ul class="%s">%s</ul>';
+        $listItemTemplate = '<li><a href="%1$s"%2$s><img src="%1$s" class="image" title="%3$s (%4$s)" /></a></li>';
+        
+        $items = "";
+        
+        foreach ($list as $file => $fileatts) //in this case item == filename, value == path
+        {
+            $items .= sprintf($listItemTemplate, $fileatts["url"], $atts["target"], $fileatts["name"], $fileatts["size"]);
+        }
+        
+        return sprintf($listTemplate, $atts["class"], $items);
+    }
 
     function _MakeTabularList($list, $atts)
     {

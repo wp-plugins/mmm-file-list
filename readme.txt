@@ -17,9 +17,9 @@ This is a simple plugin to list files in a given directory using this shortcode:
 **Parameters:**
 
 * **folder**: Relative to the base uploads directory of your wordpress install (e.g. siteurl.com/wp-content/uploads/mm/yy/ or siteurl.com/wp-content/ or siteurl.com/media).  You can check your media settings from your WordPress dashboard in Settings -> Media.  If you organize your uploads into a month / year base folder you should either prepend the field with "/../../" or disable that setting.
-* **format**: Tabular (format="table") or Unordered list (format="li") or comma-delimited (format="comma")
+* **format**: Tabular (format="table") or Unordered list (format="li") or comma-delimited (format="comma") or Unordered List of Images (format="img" Note: this will put all files in <img> tags)
 * **types**: Only list given file types (e.g. types="pdf,doc,txt")
-* **class**: Only used for the "li" and "table" formats, applies a given class to the unordered list (e.g. class="mmm-list" / for more information on styling check out the FAQ)
+* **class**: Only used for the "li", "img" and "table" formats, applies a given class to the unordered list (e.g. class="mmm-list" / for more information on styling check out the FAQ)
 * **limit**: The default value will list all files in the directory.  You can add a positive number of your choice and that amount of files will be displayed.
 * **orderby**: Current params can be either "name" (default) or "date" which sorts the files by date modified since date created seems to be hit and miss.
 * **target**: This parameter lets you set a "target" for the links to the listed files (This is typically used to open the files in a new window)
@@ -78,11 +78,20 @@ If you want to remove the warning text that is output when folders / files are n
 
 .mmm-warning {display: none;}
 
+= The "img" format keeps trying to display non-images, what gives? =
+
+The "img" format outputs all files in <li><a><img></a></li> blocks so if you have non-image files in the same directory I recommend using the "types" parameter to specify only images should be displayed then include a second shortcode to include all the non-image types you want to display.
+
 == Screenshots ==
 
 1. Sample of the "li" output used with a fairly large set of bylaws.
 
 == Changelog ==
+
+= 0.7 =
+
+* Added "img" output format to create an Unordered List of Images.
+* Changed code so all files in the directory will output if no types are listed (this may annoy some people but it makes the experience much friendlier for new people).
 
 = 0.6a =
 
