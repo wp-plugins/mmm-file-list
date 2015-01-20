@@ -12,17 +12,19 @@ Plugin to list files in a given directory using a basic shortcode.
 
 == Description ==
 
-This is a simple plugin to list files in a given directory using this shortcode: [MMFileList  /].
+This is a simple plugin to list files in a given directory using this shortcode: [MMFileList /].
+
 
 **Parameters:**
 
-* **folder**: Relative to the base uploads directory of your wordpress install (e.g. siteurl.com/wp-content/uploads/mm/yy/ or siteurl.com/wp-content/ or siteurl.com/media).  You can check your media settings from your WordPress dashboard in Settings -> Media.  If you organize your uploads into a month / year base folder you should either prepend the field with "/../../" or disable that setting.
-* **format**: Tabular (format="table") or Unordered list (format="li") or comma-delimited (format="comma") or Unordered List of Images (format="img" Note: this will put all files in <img> tags)
-* **types**: Only list given file types (e.g. types="pdf,doc,txt")
-* **class**: Only used for the "li", "img" and "table" formats, applies a given class to the unordered list (e.g. class="mmm-list" / for more information on styling check out the FAQ)
+* **folder**: Relative to the base uploads directory of your wordpress install (e.g. siteurl.com/wp-content/uploads/mm/yy/ or siteurl.com/wp-content/ or siteurl.com/media).  You can check your media settings from your WordPress dashboard in Settings -> Media.  If you organize your uploads in the WordPress default month / year base folder you should either prepend this field with "/../../" or disable that setting before uploading files.
+* **format**: Tabular (format="table") or Unordered list (format="li") or comma-delimited (format="comma") or Unordered List of Images (format="img" Note: this will put all files in <img> tags) or Custom (format="custom") for using the Shortcode content to create a custom template (see Custom Formats section below for more information)
+* **types**: Only list given file types (e.g. types="pdf,doc,txt"), If no types are specified then all files in the directory will be listed.
+* **class**: Only used for the "li", "img" and "table" formats, applies a given class to the shortcode output (e.g. <ul class="mmm-list"> / for more information on styling check out the FAQ)
 * **limit**: The default value will list all files in the directory.  You can add a positive number of your choice and that amount of files will be displayed.
 * **orderby**: Current params can be either "name" (default) or "date" which sorts the files by date modified since date created seems to be hit and miss.
 * **target**: This parameter lets you set a "target" for the links to the listed files (This is typically used to open the files in a new window)
+
 
 **Output:**
 
@@ -35,6 +37,7 @@ At this point "comma" is the only available text output and it only outputs the 
 
 If the folder you've entered isn't found or there are no files with the extensions you've listed there will be some warning text output to let you know.  This text is wrapped in a "mmm-warning" class in case you want to style it out (for more information on styling check out the FAQ)
 
+
 **Usage Examples:**
 
 Let's say you're using the default WordPress Media settings so we can expect your uploads folder to be in /wp-content/uploads/mm/yy/ with this in mind the shortcode "folder" attribute will look in a directory relative to this.  With this base directory say we want to list "png" files in the folder "/wp-content/uploads/cats/" we would use the following shortcode:
@@ -46,6 +49,20 @@ If you have you disabled the setting to store uploads in the /mm/yy/ folder stru
 [MMFileList folder="/cats/" format="table" types="png" /]
 
 This will result in a tabular list of all .png files in the /wp-content/uploads/cats/ folder.
+
+
+**Custom Formats**
+
+The "li" and "custom" formats allow you to define a template using the content portion of the shortcode.  The difference between these two output formats is that "li" will still wrap all the output in a <ul> tag and each file will be wrapped in a <li> tag.  Here is an example of how to create a custom template:
+
+[MMFileList folder="/cats/" format="li"]<div class="taco"><a href="{url}">{name} ({size})</a></div>[/MMFileList]
+
+Variables that can be used with the custom templates are as follows:
+
+* {name} - This will output the filename
+* {size} - This will output the filesize
+* {url} - This will output the file url
+* If you would like more information available to be output don't hesitate to a send in a request via the support forum
 
 
 == Installation ==
@@ -87,6 +104,13 @@ The "img" format outputs all files in <li><a><img></a></li> blocks so if you hav
 1. Sample of the "li" output used with a fairly large set of bylaws.
 
 == Changelog ==
+
+= 1.0 =
+
+* Added hooks for shortcode content to customize output of some templates
+* Added a "custom" output format for use with the content hook
+* Organized the code and updated some comments to reflect the hook change
+* Added some "borrowed" code to fix the empty <p> tag issue common with WordPress shortcodes
 
 = 0.7 =
 

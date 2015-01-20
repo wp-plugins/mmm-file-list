@@ -3,20 +3,36 @@
 Plugin Name: Mmm Simple File List
 Plugin URI: http://www.mediamanifesto.com
 Description: Plugin to list files in a given directory using this shortcode [MMFileList folder="optional starting from base uploads path" format="li (unordered list) or table (tabular) or img (unordered list of images) or comma (plain text, comma, delimited) types="optional file-extension e.g. pdf,doc" class="optional css class for html list"]
-Version: 0.7
+Version: 1.0
 Author: Adam Bissonnette
 Author URI: http://www.mediamanifesto.com
 */
 
 class MM_FileList
 {
+    public static $attsKeyTemplate = "{%s}";
+
 	function MM_FileList()
 	{
         add_shortcode( 'MMFileList', array(&$this, 'ListFiles') );
 	}
 	
-	function ListFiles($atts)
+    function copter_remove_crappy_markup( $string )
+    {
+        $patterns = array(
+            '#^\s*</p>#',
+            '#<p>\s*$#'
+        );
+
+        return preg_replace($patterns, '', $string);
+    }
+
+	function ListFiles($atts, $content="")
 	{	
+        //Strip any empty <p> tags
+        //Credit goes to: https://gist.github.com/jlengstorf/5370457
+        $content = $this->copter_remove_crappy_markup($content);
+
 		extract( shortcode_atts( array(
 		'folder' => '',
 		'format' => 'li',
@@ -106,24 +122,70 @@ class MM_FileList
                 $formatAtts = array("class" => $class, "target" => $target);
 
                 switch($format){
+                    case 'li':
+                        $output = $this->_MakeUnorderedList($list, $content, $formatAtts);
+                    case 'img':
+                        $listTemplate = '<ul class="%s">%s</ul>';
+
+                        if ($content == "")
+                        {
+                            $content = '<a href="{url}"{target}><img src="{url}" class="image" title="{name} ({size})" /></a>';
+                        }
+
+                        $output = $this->_MakeUnorderedList($list, $content, $formatAtts);
+                    break;
+                    case 'custom':
+                        $output = $this->_OutputList($list, $content, $formatAtts);
+                    break;
                     case 'table':
-                        return $this->_MakeTabularLIst($list, $formatAtts);
+                        $output = $this->_MakeTabularLIst($list, $content, $formatAtts);
                     break;
                 	case 'comma':
-                	    $output = $this->_MakeCommaDelimitedList($list);
+                        $output = $this->_MakeCommaDelimitedList($list);
          			break;
-                    case 'img':
-                        $output = $this->_MakeUnorderedListOfImages($list, $formatAtts);
-                    break;
-                    case 'li':
                     default:
-                        return $this->_MakeUnorderedList($list, $formatAtts);
+                        $output = $this->_MakeUnorderedList($list, $content, $formatAtts);
                     break;
                 }
             }
         }
         
         return $output;
+    }
+
+    function _AddFileAttsToTemplate($template, $fileAtts)
+    {
+        $output = $template;
+
+        foreach ($fileAtts as $key => $value) {
+            if (isset($value))
+            {
+                $output = str_replace(sprintf($this::$attsKeyTemplate, $key), $value, $output);
+            }
+        }
+
+        return $output;
+    }
+
+    function _OutputList($list, $content, $atts, $wrapper="")
+    {
+        $listItemTemplate = $content;
+
+        $items = "";
+
+        foreach ($list as $file => $fileatts) //in this case item == filename, value == path
+        {
+            $items .= $this->_AddFileAttsToTemplate($listItemTemplate, $fileatts);
+        }
+        
+        if ($wrapper != "")
+        {
+            return sprintf($wrapper, $atts["class"], $items);
+        }
+        else
+        {
+            return $items;
+        }
     }
 
     function _MakeCommaDelimitedList($list)
@@ -133,37 +195,30 @@ class MM_FileList
         return implode(",", $formattedList);
     }
 
-	function _MakeUnorderedList($list, $atts)
+	function _MakeUnorderedList($list, $content, $atts)
 	{
-		//These templates could be set as editable / saveable options
 		$listTemplate = '<ul class="%s">%s</ul>';
-		$listItemTemplate = '<li><a href="%s"%s><span class="filename">%s</span><span class="filesize"> (%s)</span></a></li>';
-		
-		$items = "";
-		
-		foreach ($list as $file => $fileatts) //in this case item == filename, value == path
-		{
-			$items .= sprintf($listItemTemplate, $fileatts["url"], $atts["target"], $fileatts["name"], $fileatts["size"]);
-		}
-		
-		return sprintf($listTemplate, $atts["class"], $items);
-	}
+        $listItemTemplate = sprintf('<li>%s</li>', $content);
 
-    function _MakeUnorderedListOfImages($list, $atts)
-    {
-        //These templates could be set as editable / saveable options
-        $listTemplate = '<ul class="%s">%s</ul>';
-        $listItemTemplate = '<li><a href="%1$s"%2$s><img src="%1$s" class="image" title="%3$s (%4$s)" /></a></li>';
-        
-        $items = "";
-        
-        foreach ($list as $file => $fileatts) //in this case item == filename, value == path
+        if ($content == "")
         {
-            $items .= sprintf($listItemTemplate, $fileatts["url"], $atts["target"], $fileatts["name"], $fileatts["size"]);
-        }
+            $content = '<a href="%s"%s><span class="filename">%s</span><span class="filesize"> (%s)</span></a>';
+            $listItemTemplate = sprintf('<li>%s</li>', $content);
+
+            $items = "";
         
-        return sprintf($listTemplate, $atts["class"], $items);
-    }
+            foreach ($list as $file => $fileatts) //in this case item == filename, value == path
+            {
+                $items .= sprintf($listItemTemplate, $fileatts["url"], $atts["target"], $fileatts["name"], $fileatts["size"]);
+            }
+            
+            return sprintf($listTemplate, $atts["class"], $items);
+        }
+        else
+        {
+            return $this->_OutputList($list, $listItemTemplate, $atts, $listTemplate);
+        }
+	}
 
     function _MakeTabularList($list, $atts)
     {
