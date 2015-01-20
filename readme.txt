@@ -20,7 +20,7 @@ This is a simple plugin to list files in a given directory using this shortcode:
 * **folder**: Relative to the base uploads directory of your wordpress install (e.g. siteurl.com/wp-content/uploads/mm/yy/ or siteurl.com/wp-content/ or siteurl.com/media).  You can check your media settings from your WordPress dashboard in Settings -> Media.  If you organize your uploads in the WordPress default month / year base folder you should either prepend this field with "/../../" or disable that setting before uploading files.
 * **format**: Tabular (format="table") or Unordered list (format="li") or comma-delimited (format="comma") or Unordered List of Images (format="img" Note: this will put all files in <img> tags) or Custom (format="custom") for using the Shortcode content to create a custom template (see Custom Formats section below for more information)
 * **types**: Only list given file types (e.g. types="pdf,doc,txt"), If no types are specified then all files in the directory will be listed.
-* **class**: Only used for the "li", "img" and "table" formats, applies a given class to the shortcode output (e.g. <ul class="mmm-list"> / for more information on styling check out the FAQ)
+* **class**: Only used for the "li", "img" and "table" formats, applies a given class to the shortcode output (e.g. &#60;ul class="mmm-list"&#62; / for more information on styling check out the FAQ)
 * **limit**: The default value will list all files in the directory.  You can add a positive number of your choice and that amount of files will be displayed.
 * **orderby**: Current params can be either "name" (default) or "date" which sorts the files by date modified since date created seems to be hit and miss.
 * **target**: This parameter lets you set a "target" for the links to the listed files (This is typically used to open the files in a new window)
@@ -44,7 +44,7 @@ Let's say you're using the default WordPress Media settings so we can expect you
 
 [MMFileList folder="/../../cats/" format="table" types="png" /]
 
-If you have you disabled the setting to store uploads in the /mm/yy/ folder structure (you can do this within Settings -> Media) and wanted to display that same file you would use this shortcode:
+If you have you disabled the setting to store uploads in the /mm/yy/ folder structure (you can do this within Settings -&#62; Media) and wanted to display that same file you would use this shortcode:
 
 [MMFileList folder="/cats/" format="table" types="png" /]
 
@@ -53,9 +53,9 @@ This will result in a tabular list of all .png files in the /wp-content/uploads/
 
 **Custom Formats**
 
-The "li" and "custom" formats allow you to define a template using the content portion of the shortcode.  The difference between these two output formats is that "li" will still wrap all the output in a <ul> tag and each file will be wrapped in a <li> tag.  Here is an example of how to create a custom template:
+The "li" and "custom" formats allow you to define a template using the content portion of the shortcode.  The difference between these two output formats is that "li" will still wrap all the output in a &#60;ul&#62; tag and each file will be wrapped in a &#60;li&#62; tag.  Here is an example of how to create a custom template:
 
-[MMFileList folder="/cats/" format="li"]<div class="taco"><a href="{url}">{name} ({size})</a></div>[/MMFileList]
+[MMFileList folder="/cats/" format="li"]&#60;div class="taco"&#62;&#60;a href="{url}"&#62;{name} ({size})&#60;/a&#62;&#60;/div&#62;[/MMFileList]
 
 Variables that can be used with the custom templates are as follows:
 
