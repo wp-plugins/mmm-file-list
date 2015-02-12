@@ -105,6 +105,10 @@ The "img" format outputs all files in <li><a><img></a></li> blocks so if you hav
 
 == Changelog ==
 
+= 1.1 =
+
+* Fixed missing break; in the format switch
+
 = 1.0 =
 
 * Added hooks for shortcode content to customize output of some templates
