@@ -12,11 +12,11 @@ class MM_FileList
 {
     public static $attsKeyTemplate = "{%s}";
 
-	function MM_FileList()
-	{
+    function MM_FileList()
+    {
         add_shortcode( 'MMFileList', array(&$this, 'ListFiles') );
-	}
-	
+    }
+    
     function copter_remove_crappy_markup( $string )
     {
         $patterns = array(
@@ -27,29 +27,29 @@ class MM_FileList
         return preg_replace($patterns, '', $string);
     }
 
-	function ListFiles($atts, $content="")
-	{	
+    function ListFiles($atts, $content="")
+    {   
         //Strip any empty <p> tags
         //Credit goes to: https://gist.github.com/jlengstorf/5370457
         $content = $this->copter_remove_crappy_markup($content);
 
-		extract( shortcode_atts( array(
-		'folder' => '',
-		'format' => 'li',
-		'types' => '',
+        extract( shortcode_atts( array(
+        'folder' => '',
+        'format' => 'li',
+        'types' => '',
         'class' => '',
         'limit' => '-1',
         'orderby' => 'name', //name or date
         'target' => ''
-		), $atts ) );
-		
+        ), $atts ) );
+        
         $folder = $this->_check_for_slashes($folder);
 
-		$baseDir = wp_upload_dir(); //Base Upload Directory
-		$dir = $baseDir['path'] . '/' . $folder;
-		$outputDir = $baseDir['url'] . '/' . $folder; //ex. http://example.com/wp-content/uploads/2010/05/../../cats
-		
-		$typesToList = array_filter(explode(",", $types));
+        $baseDir = wp_upload_dir(); //Base Upload Directory
+        $dir = $baseDir['path'] . '/' . $folder;
+        $outputDir = $baseDir['url'] . '/' . $folder; //ex. http://example.com/wp-content/uploads/2010/05/../../cats
+        
+        $typesToList = array_filter(explode(",", $types));
 
         $output = "";
 
@@ -62,23 +62,23 @@ class MM_FileList
         else
         {
             $files = scandir($dir);
-    		$list = array();
+            $list = array();
 
             if ($orderby == "date")
             {
                 $files = array_reverse($this->rearrange_files_by_date($dir, $files));
             }
 
-    		foreach($files as $file)
-    		{
-    			$path_parts = pathinfo($file);
+            foreach($files as $file)
+            {
+                $path_parts = pathinfo($file);
 
                 if (isset($path_parts['extension'])) //check for folders - don't list them
                 {
-        			$extension = $path_parts['extension'];
-        			
-        			if($file != '.' && $file != '..')
-        			{
+                    $extension = $path_parts['extension'];
+                    
+                    if($file != '.' && $file != '..')
+                    {
                         if(!is_dir($dir.'/'.$file))
                         {
                             $file = array("name" => $file, "url" => $outputDir . "/" . $file, "size" => $this->human_filesize(filesize($dir . '/' . $file)));
@@ -96,9 +96,9 @@ class MM_FileList
                                 array_push($list, $file);
                             }
                         }
-        			}
+                    }
                 }
-    		}
+            }
             
             if (is_numeric($limit))
             {
@@ -141,9 +141,9 @@ class MM_FileList
                     case 'table':
                         $output = $this->_MakeTabularLIst($list, $content, $formatAtts);
                     break;
-                	case 'comma':
+                    case 'comma':
                         $output = $this->_MakeCommaDelimitedList($list);
-         			break;
+                    break;
                     default:
                         $output = $this->_MakeUnorderedList($list, $content, $formatAtts);
                     break;
@@ -191,14 +191,18 @@ class MM_FileList
 
     function _MakeCommaDelimitedList($list)
     {
-        $formattedList = array_map(function($entry) { $listItemTemplate = "%s"; return sprintf($listItemTemplate, $entry["url"]); },$list);
+        $formattedList = array();
+
+        foreach ($list as $entry) {
+            array_push($formattedList, $entry["url"]);
+        }
 
         return implode(",", $formattedList);
     }
 
-	function _MakeUnorderedList($list, $content, $atts)
-	{
-		$listTemplate = '<ul class="%s">%s</ul>';
+    function _MakeUnorderedList($list, $content, $atts)
+    {
+        $listTemplate = '<ul class="%s">%s</ul>';
         $listItemTemplate = sprintf('<li>%s</li>', $content);
 
         if ($content == "")
@@ -219,7 +223,7 @@ class MM_FileList
         {
             return $this->_OutputList($list, $listItemTemplate, $atts, $listTemplate);
         }
-	}
+    }
 
     function _MakeTabularList($list, $atts)
     {
