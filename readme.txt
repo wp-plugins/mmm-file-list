@@ -105,6 +105,10 @@ The "img" format outputs all files in <li><a><img></a></li> blocks so if you hav
 
 == Changelog ==
 
+= 1.2 =
+
+* Fixed bug with array_map usage in 5.2.17
+
 = 1.1 =
 
 * Fixed missing break; in the format switch
