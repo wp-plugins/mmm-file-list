@@ -245,27 +245,27 @@ class MM_FileList
         $bytes = floatval($bytes);
         $arBytes = array(
             array(
-                "UNIT" => "PB",
+                "UNIT" => "Pb",
                 "VALUE" => pow(1024, 5)
             ),
             array(
-                "UNIT" => "TB",
+                "UNIT" => "Tb",
                 "VALUE" => pow(1024, 4)
             ),
             array(
-                "UNIT" => "GB",
+                "UNIT" => "Gb",
                 "VALUE" => pow(1024, 3)
             ),
             array(
-                "UNIT" => "MB",
+                "UNIT" => "Mb",
                 "VALUE" => pow(1024, 2)
             ),
             array(
-                "UNIT" => "KB",
+                "UNIT" => "Kb",
                 "VALUE" => 1024
             ),
             array(
-                "UNIT" => "B",
+                "UNIT" => "Bytes",
                 "VALUE" => 1
             ),
         );
