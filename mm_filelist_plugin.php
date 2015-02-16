@@ -3,7 +3,7 @@
 Plugin Name: Mmm Simple File List
 Plugin URI: http://www.mediamanifesto.com
 Description: Plugin to list files in a given directory using this shortcode [MMFileList folder="optional starting from base uploads path" format="li (unordered list) or table (tabular) or img (unordered list of images) or comma (plain text, comma, delimited) types="optional file-extension e.g. pdf,doc" class="optional css class for html list"]
-Version: 1.2
+Version: 1.3
 Author: Adam Bissonnette
 Author URI: http://www.mediamanifesto.com
 */
@@ -240,11 +240,46 @@ class MM_FileList
         return sprintf($listTemplate, $atts["class"], $listHeadingTemplate, $items);
     }
 
-    //Stolen from comments : http://php.net/manual/en/function.filesize.php thx Rommelsantor.com
-    function human_filesize($bytes, $decimals = 2) {
-      $sz = 'BKMGTP';
-      $factor = floor((strlen($bytes) - 1) / 3);
-      return sprintf("%.{$decimals}f", $bytes / pow(1024, $factor)) . @$sz[$factor];
+    //Stolen from comments : http://php.net/manual/en/function.filesize.php thx Arseny Mogilev
+    function human_filesize($bytes) {
+        $bytes = floatval($bytes);
+        $arBytes = array(
+            array(
+                "UNIT" => "PB",
+                "VALUE" => pow(1024, 5)
+            ),
+            array(
+                "UNIT" => "TB",
+                "VALUE" => pow(1024, 4)
+            ),
+            array(
+                "UNIT" => "GB",
+                "VALUE" => pow(1024, 3)
+            ),
+            array(
+                "UNIT" => "MB",
+                "VALUE" => pow(1024, 2)
+            ),
+            array(
+                "UNIT" => "KB",
+                "VALUE" => 1024
+            ),
+            array(
+                "UNIT" => "B",
+                "VALUE" => 1
+            ),
+        );
+
+        foreach($arBytes as $arItem)
+        {
+            if($bytes >= $arItem["VALUE"])
+            {
+                $result = $bytes / $arItem["VALUE"];
+                $result = str_replace(",", "." , strval(round($result, 2)))." ".$arItem["UNIT"];
+                break;
+            }
+        }
+        return $result;
     }
 
     function rearrange_files_by_date($dir, $files)
