@@ -105,7 +105,7 @@ The "img" format outputs all files in <li><a><img></a></li> blocks so if you hav
 
 == Changelog ==
 
-= 1.3a =
+= 1.3.1 =
 
 * Bug fix for tabular list target and class vars not being passed through correctly.
 
