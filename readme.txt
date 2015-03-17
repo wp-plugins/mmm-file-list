@@ -105,6 +105,10 @@ The "img" format outputs all files in <li><a><img></a></li> blocks so if you hav
 
 == Changelog ==
 
+= 1.5 =
+
+* Bug fix for orderby date code
+
 = 1.4 =
 
 * Bug fix for tabular list target and class vars not being passed through correctly.
