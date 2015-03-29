@@ -3,7 +3,7 @@
 Plugin Name: Mmm Simple File List
 Plugin URI: http://www.mediamanifesto.com
 Description: Plugin to list files in a given directory using this shortcode [MMFileList folder="optional starting from base uploads path" format="li (unordered list) or table (tabular) or img (unordered list of images) or comma (plain text, comma, delimited) types="optional file-extension e.g. pdf,doc" class="optional css class for html list"]
-Version: 1.6
+Version: 1.7
 Author: Adam Bissonnette
 Author URI: http://www.mediamanifesto.com
 */
@@ -40,7 +40,7 @@ class MM_FileList
         'class' => '',
         'limit' => '-1',
         'orderby' => 'name', //name or date
-        'order' => "desc",
+        'order' => "asc",
         'target' => ''
         ), $atts ) );
         
@@ -70,7 +70,7 @@ class MM_FileList
                 $files = array_reverse($this->rearrange_files_by_date($dir . "/", $files));
             }
 
-            if ($order == "asc")
+            if ($order == "desc")
             {
                 $files = array_reverse($files);
             }

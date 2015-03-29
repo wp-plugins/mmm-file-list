@@ -23,7 +23,7 @@ This is a simple plugin to list files in a given directory using this shortcode:
 * **class**: Only used for the "li", "img" and "table" formats, applies a given class to the shortcode output (e.g. &#60;ul class="mmm-list"&#62; / for more information on styling check out the FAQ)
 * **limit**: The default value will list all files in the directory.  You can add a positive number of your choice and that amount of files will be displayed.
 * **orderby**: Current params can be either "name" (default) or "date" which sorts the files by date modified since date created seems to be hit and miss.
-* **order**: By default the order of the list is sorted descending (desc) from the highest value to lowest where value is determined by the "orderby" attribute.  Ordering by date results in a list being displayed as newest to oldest and ordering by name results in a list descending through the alphabet (a-z).  To reverse either of these defaults simply add order="asc" into the shortcode parameters
+* **order**: By default the order of the list is sorted descending (asc) from the highest value to lowest where value is determined by the "orderby" attribute.  Ordering by date results in a list being displayed as newest to oldest and ordering by name results in a list descending through the alphabet (a-z).  To reverse either of these defaults simply add order="desc" into the shortcode parameters
 * **target**: This parameter lets you set a "target" for the links to the listed files (This is typically used to open the files in a new window)
 
 
@@ -105,6 +105,10 @@ The "img" format outputs all files in <li><a><img></a></li> blocks so if you hav
 1. Sample of the "li" output used with a fairly large set of bylaws.
 
 == Changelog ==
+
+= 1.7 =
+
+* Changed default order setting to be labeled as "ascending|asc" instead of "descending|desc"
 
 = 1.6 =
 
