@@ -106,6 +106,15 @@ The "img" format outputs all files in <li><a><img></a></li> blocks so if you hav
 
 == Changelog ==
 
+= 1.8 =
+
+* Added date modified as an available template parameter using the {date} markup
+* Added file extension as an available template parameter using the {ext} markup
+* Added a "prettyname" parameter to the shortcode which strips dashes, underscores and the file extension when set to "true", replaces them with spaces, adds spaces between uppercase characters and then trims everything nicely
+* Added a "regexstrip" parameter to the shortcode which strips away characters based on a given regex string from the user (Note: will throw errors if the regex isn't properly formatted!)
+* Added a "dateformat" parameter for adjusting how the date modified variable appears
+* Added an output format called "li2" which renders the name date and extension parameters in an unordered list
+
 = 1.7 =
 
 * Changed default order setting to be labeled as "ascending|asc" instead of "descending|desc"
